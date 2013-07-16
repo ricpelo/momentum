@@ -8,9 +8,9 @@
 !% $MAX_VERBSPACE=4500
 
 !
-! EL CÍRCULO
+! MOMENTUM
 !
-! Copyright (c) 2012 Ricardo Pérez López (Alpha Aventuras)
+! Copyright (c) 2013 Ricardo Pérez López (Alpha Aventuras)
 !
 
 ! This program is free software: you can redistribute it and/or modify
@@ -968,7 +968,7 @@ Class Lugar
 #endif;
 
 
-Include "elcirculo.bli";    ! Los recursos multimedia de la aventura
+Include "momentum.bli";    ! Los recursos multimedia de la aventura
 Include "SGW+DMX_NG";       ! Entre Parser y VerbLib
 Include "BetaTest";         ! Modo betatesting
 
@@ -3765,7 +3765,7 @@ Verb meta 'tt'
 
 [ CreditosSub;
   viewImageCenter(Logo_Alpha_Aventuras_jpg);
-  print (s_head) "^@<<EL CÍRCULO@>>", " --- (c) 2012 Alpha Aventuras^^";
+  print (s_head) "^@<<MOMENTUM@>>", " --- (c) 2012 Alpha Aventuras^^";
   print (s_bold) "-- PROGRAMACIÓN Y DISEÑO:^";
   print "    Ricardo Pérez López^^";
   print (s_bold) "-- GRÁFICOS:^";
@@ -3805,7 +3805,7 @@ Verb meta 'tt'
          dirección:^^";
   print (s_pref) "http://www.gnu.org/licenses/gpl.txt^";
   print "^El código fuente del programa está disponible en Github:^^";
-  print (s_pref) "https://github.com/ricpelo/elcirculo^";
+  print (s_pref) "https://bitbucket.com/ricpelo/momentum^";
   KeyDelay();
   print "^Visítanos en:^^";
   print (s_pref) "http://www.alpha-aventuras.es^
@@ -4080,4 +4080,4 @@ Include "prologo.inf";     ! Prólogo
 Include "historia.inf";    ! Primer capítulo
 
 
-! Fin elcirculo.inf
+! Fin momentum.inf

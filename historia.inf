@@ -340,8 +340,7 @@ Object amigos_katie "amigos de Katie"
             qtransfer = 1;
       }
     ],
-    life [
-      tema;
+    life [;
       Ask:
         self.Qselect(1);
         rtrue;
