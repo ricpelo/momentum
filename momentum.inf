@@ -1690,14 +1690,12 @@ Object autoguardador
     activado true,
     se_ha_guardado false,
     each_turn [;
-      if (self.found_in()) {
-        if (~~(AutoSave())) {
-          print "^No se ha podido guardar la partida automáticamente. Se
-                 deshabilitará el guardado automático.^";
-          self.desactivar();
-        } else {
-          self.se_ha_guardado = true;
-        }
+      if (~~(AutoSave())) {
+        print "^No se ha podido guardar la partida automáticamente. Se
+               deshabilitará el guardado automático.^";
+        self.desactivar();
+      } else {
+        self.se_ha_guardado = true;
       }
     ],
   has
