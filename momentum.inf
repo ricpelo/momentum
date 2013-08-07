@@ -3149,6 +3149,7 @@ Object Menu_Configuracion
   else             ApagarGraficos();
   ControlTimer.ReanudarTick();
   glk_window_noscroll(gg_mainwin);
+  glk_set_reflow(ZIPI_Configuracion.reflow);
 ];
 
 

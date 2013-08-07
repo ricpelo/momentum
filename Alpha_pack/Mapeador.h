@@ -349,6 +349,7 @@ Verb meta 'mapa'
   ControlTimer.PausarTick();
   #endif;
 !  openGraphicWindow(200);
+  glk_set_reflow(0);
   if (gg_menuwin) {
     glk_window_close(gg_menuwin, 0);
     gg_menuwin = 0;
@@ -356,7 +357,10 @@ Verb meta 'mapa'
   glk_window_get_size(gg_statuswin, gg_arguments, gg_arguments + WORDSIZE);
   altura = gg_arguments-->1;
 !  glk_window_close(gg_statuswin, 0);
-  if (gg_bigwin) glk_window_close(gg_bigwin, 0);
+  if (gg_bigwin) {
+    glk_window_clear(gg_bigwin);
+    glk_window_close(gg_bigwin, 0);
+  }
   gg_bigwin = glk_window_open(gg_mainwin,
                               winmethod_Left + winmethod_Proportional +
                               winmethod_NoBorder,
