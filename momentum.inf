@@ -479,6 +479,7 @@ Include "Parser";
     ControlTimer.ReactivarTick();
     ZIPI_Configuracion.restaurar_valores();
     ZIPI_Mostrar_Hyperlinks.restaurar_valores();
+    glk_menu_hyperlink_setup(Menu_Importantes);
   }
 ];
 
