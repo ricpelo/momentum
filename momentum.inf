@@ -1667,10 +1667,13 @@ Object
     nombre_direccion   NULL,
     del_nombre_link    NULL,
     al_nombre_link     NULL,
-    ! Esta rutina no se usa. Sólo la pongo para evitar un warning, ya que la
-    ! rutina VozLejana() de la librería de Sonidos no se usa:
-    dummy [;
+    ! Esta rutina no se usa. Sólo la pongo para evitar warnings en
+    ! identificadores que no se usan:
+    dummy [
+      tmp;
+      tmp = NIVEL_MUYALTO;
       VozLejana("dummy");
+      FinHistoria();
     ];
 
 
