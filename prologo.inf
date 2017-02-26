@@ -592,7 +592,9 @@ Object telefono_katie "teléfono" cocina_katie
       becca_ausente.found_in = true;
       move becca_ausente to LugarReal();
       move charco_katie to pasillo_katie;
-      move puerta_katie to pasillo_katie;
+      remove puerta_katie;
+      give puerta_katie absent;
+      move puerta_final_katie to pasillo_katie;
       pasillo_katie.sgw_img = Pasillo_Katie_Charco_jpg;
     ],
     becca_lo_coge [;
@@ -1226,12 +1228,9 @@ Object tema_becca_tv "el televisor" TemasBecca
 
 
 [ FinPrologo
-  i j sw cols;
-  StatusLineHeight(0);
-  cols = glk_get_config(config_Cols);
-  glk_set_config(config_Cols, 80);
-  RefrescarVentanasTexto();
+  i j sw;
   MenuAcciones.CerrarVentana();
+  glk_window_close(gg_statuswin, 0);
   clearTextWindow();
   print "Te acercas, paso a paso, hasta la puerta de tu habitación, mojándote
          en el proceso las plantas de los pies, lo que te provoca una
@@ -1295,7 +1294,11 @@ Object tema_becca_tv "el televisor" TemasBecca
   BanderaFin(2);
   glk_window_close(gg_quotewin, 0);
   gg_quotewin = 0;
-  glk_set_config(config_Cols, cols);
+  gg_statuswin = glk_window_open(gg_mainwin,
+                                 winmethod_Above + winmethod_Fixed +
+                                 winmethod_NoBorder,
+                                 1, wintype_TextGrid, GG_STATUSWIN_ROCK); 
+!  AbrirVentanaEstado();
   RefrescarVentanasTexto();
   viewImageCenter(Nieve_TV1_jpg);
   MenuAcciones.AbrirVentana();
@@ -1471,6 +1474,7 @@ Object tema_becca_tv "el televisor" TemasBecca
 #ifdef DEBUG;
 [ TestPrologo;
   test_machine.clear();
+  test_machine.inserta("abre puerta");
   test_machine.inserta("sal");
   test_machine.inserta("baja");
   test_machine.inserta("coge telefono");

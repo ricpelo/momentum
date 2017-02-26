@@ -1467,6 +1467,7 @@ Include "Timer";            ! Mi librería de eventos temporizados
 ! Modificado para que no ponga un borde debajo de la línea de estado:
 [ StatusLineHeight hgt parwin;
   if (gg_statuswin == 0) return;
+  if (hgt == gg_statuswin_cursize) return;
   parwin = glk($0029, gg_statuswin); ! window_get_parent
   glk($0026, parwin, $112, hgt, 0); ! window_set_arrangement
   gg_statuswin_cursize = hgt;
@@ -3932,28 +3933,16 @@ Verb meta 'tt'
        ExtenderVentanaEstado();
 
        for (i = 0 : i < DAMUSIX_NCANALMAX : i++) {
-         sonidosSonando->i = Damusix.SonandoDeFondoCanal(i);
-         Damusix.PararCanal(i);
+         if (i ~= CANAL_FONDO) {
+           sonidosSonando->i = Damusix.SonandoDeFondoCanal(i);
+           Damusix.PararCanal(i);
+         }
        }
 
-       Damusix.AsignarCanal(Darkwalk_ogg, CANAL_FONDO,
-                            Damusix.QueVolumenCanal(CANAL_FONDO), 
-                            SONIDO_REPETIR);
-       Damusix.TocarCanal(CANAL_FONDO);
-       
        ZIPI_Empezar();
-       
+
        for (i = 0 : i < DAMUSIX_NCANALMAX : i++) {
          if ((i ~= CANAL_FONDO) && (sonidosSonando->i)) Damusix.TocarCanal(i);
-       }
-
-       if ((sonidosSonando->CANAL_FONDO) && (LugarReal() provides sgw_mus)) {
-         Damusix.AsignarCanal(LugarReal().sgw_mus, CANAL_FONDO,
-                              Damusix.QueVolumenCanal(CANAL_FONDO),
-                              SONIDO_REPETIR);
-         Damusix.TocarCanal(CANAL_FONDO);
-       } else {
-         Damusix.PararCanal(CANAL_FONDO);
        }
 
        StatusLineHeight(1);
