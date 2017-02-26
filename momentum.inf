@@ -3439,23 +3439,24 @@ Object Menu_Configuracion
 ];
 
 
-[ link_general obj msg art cap;
-!  if (~~(obj ofclass Object && ~~TestScope(obj)))
-  if (art == 2) glk_set_hyperlink(obj);
+[ link_general obj msg art cap
+  alcance;
+  alcance = (~~(obj ofclass Object && ~~TestScope(obj)));
+  if (art == 2 && alcance) glk_set_hyperlink(obj);
   if (msg ~= 0) {
     print (string) msg;
-    glk_set_hyperlink(0);
+    if (alcance) glk_set_hyperlink(0);
     return "";
   } else {
     if (art ~= 2) {
       ArticuloPrevio(obj, art, cap);
-      glk_set_hyperlink(obj);
+      if (alcance) glk_set_hyperlink(obj);
       MostrarNombre(obj, 2, cap);
     } else {
       MostrarNombre(obj, art, cap);
     }
   }
-  glk_set_hyperlink(0);
+  if (alcance) glk_set_hyperlink(0);
   return obj;
 ];
 

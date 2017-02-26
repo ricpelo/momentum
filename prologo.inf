@@ -211,7 +211,7 @@ Object pasillo_katie "Pasillo del piso superior"
              (string) link(cocina_katie, "planta baja"), " y cruzando tu
              espalda en forma de escalofríos continuos y persistentes.";
       if (puerta_katie notin self) {
-        " La ", (link) "puerta", " abierta a tu ", (link) cuarto_katie, " es
+        " La ", (link) "puerta", " abierta a ", (link) cuarto_katie, " es
         prácticamente la única fuente de luz en este lúgubre pasaje."; 
       } else {
         new_line;
@@ -232,7 +232,7 @@ Object decorado_pasillo_katie pasillo_katie
             "Las escaleras, de madera recia y resistente, conducen
              directamente a la ", (link) cocina_katie, " en la planta baja.";
           'puerta':
-            "La puerta entreabierta muestra una vista parcial de tu ",
+            "La puerta entreabierta muestra una vista parcial de ",
             (link) cuarto_katie, " cercándola como el marco de un cuadro
             vertical y alargado.";
           }
@@ -352,13 +352,13 @@ Object charco_katie "charco de agua"
     description [;
       "Es, claramente, un charco con forma irregular
        alimentado del agua que se filtra por debajo de la ", (link) "puerta",
-       " de tu ", (link) cuarto_katie, ".";
+       " de ", (link) cuarto_katie, ".";
     ],
     initial [;
       StartTimer(self, 4);
       "Depositado en mitad del pasillo, como una mancha líquida en el
        suelo, ves un ", (link) self,  " que se extiende filtrándose por
-       debajo de la ", (link) "puerta", " cerrada de tu ",
+       debajo de la ", (link) "puerta", " cerrada de ",
        (link) cuarto_katie, ".";
     ],
     nuevo_initial [;
@@ -519,7 +519,7 @@ Object puerta_final_katie "puerta de tu habitación"
     description [;
       "Bajo la ", (string) link(self, "puerta cerrada de tu habitación"), " se
        escurre hacia el pasillo un flujo lento pero constante de ",
-       (link) "agua", ". Un resplandor blanquecino proveniente de tu ",
+       (link) "agua", ". Un resplandor blanquecino proveniente de ",
        (link) cuarto_katie, " acompaña al río de agua mientras atraviesa la
        rendija inferior de la puerta. Del ", (link) "pomo", ", empapado como si
        rezumara humedad, caen continuas gotas al suelo.";
