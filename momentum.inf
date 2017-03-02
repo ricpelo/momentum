@@ -1467,7 +1467,6 @@ Include "Timer";            ! Mi librería de eventos temporizados
 ! Modificado para que no ponga un borde debajo de la línea de estado:
 [ StatusLineHeight hgt parwin;
   if (gg_statuswin == 0) return;
-  if (hgt == gg_statuswin_cursize) return;
   parwin = glk($0029, gg_statuswin); ! window_get_parent
   glk($0026, parwin, $112, hgt, 0); ! window_set_arrangement
   gg_statuswin_cursize = hgt;
