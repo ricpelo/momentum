@@ -1116,9 +1116,9 @@ Constant config_Cols        11;
   return ret;
 ];
 
-! Prepara hyperlink para cuando se pulse Esc:
+! Marca el hyperlink que se disparará cuando se pulse Esc:
 [ glk_menu_hyperlink_setup _vararg_count ret;
-  ! glk_menu_hyperlink_setup(link)
+  ! glk_menu_hyperlink_setup (link)
   ! And now the @glk call
   @glk $FFF1 _vararg_count ret;
   return ret;
