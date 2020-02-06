@@ -113,11 +113,11 @@ Global Emphasis_Color = GREEN;        ! Default color is green
 [ Emphasis n;
   #ifdef TARGET_ZCODE;
   switch (n) {
-    0: style roman; 
+    0: style roman;
        #ifndef SPECTEST_AVAILABLE;
        if (standard_interpreter >= 2) @set_colour 1 1;
        #ifnot;
-       if (standard_interpreter >= 2 || Spec->ColorFlag) @set_colour 1 1;     
+       if (standard_interpreter >= 2 || Spec->ColorFlag) @set_colour 1 1;
        #endif;
     1: style bold;
     2: style underline;
@@ -354,7 +354,7 @@ Array CenterText -> 84;
   while (i) {
     if (str == glk_window_get_stream(i))
       return i;
-    i = glk_window_iterate(i, gg_arguments);  
+    i = glk_window_iterate(i, gg_arguments);
   }
   return 0;
 ];
@@ -372,11 +372,11 @@ Array CenterText -> 84;
     if (i > 0) break;
     l = o;
   }
-  if (o == nothing) ! o is the last one, x goes after it, or 
+  if (o == nothing) ! o is the last one, x goes after it, or
     pmove(x, y);
   else if (l <= 0) ! it goes before the first one
     move x to y;
-  else 
+  else
     rmove(x, l);
 ];
 

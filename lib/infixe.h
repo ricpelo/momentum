@@ -114,7 +114,7 @@ Array  infix_text -> 128;
     InfixPrintArray:      t = #array_names_array;
   }
 
-! print "Looking at table ", t, " from ", range2, " to ", range1, " ";    
+! print "Looking at table ", t, " from ", range2, " to ", range1, " ";
   i2 = range2 - range1; it2 = infix_text + WORDSIZE;
   for (i = 0 : i <= i2 : i++) {
 !   print i," ";
@@ -133,7 +133,7 @@ Array  infix_text -> 128;
     if (itlc->(it2->0) ~= wa->0) jump XL;
 
     for (j = 1 : j < k : j++) ! Compare the strings...
-      if (itlc->(it2->j) ~= wa->j) jump XL;       
+      if (itlc->(it2->j) ~= wa->j) jump XL;
     parsed_number = i + range1 + plus;
     rtrue;
   .XL;
@@ -158,10 +158,10 @@ Array  infix_text -> 128;
 
   infix_parsed_lvalue = -1;
   infix_term_type = INFIXTT_NUMBER;
-  
+
   w = NextWordStopped();
 ! print "W:",w;
- 
+
   if (w == -1) return -1;
 
   wa = WordAddress(wn-1);
@@ -237,7 +237,7 @@ Array  infix_text -> 128;
 !     print "yes^";
       wn++; return 1;
     }
-    
+
     infix_term_type = INFIXTT_PROPERTY;
 !   print "no ^Propertie? (from ", #lowest_property_number, " to ", #highest_property_number, ")";
 !   [ InfixMatchPrule PrintingRule range1 range2 wa wl t i i2 it2 itlc j k plus;
@@ -382,7 +382,7 @@ Array  infix_text -> 128;
     if (buffer->i == '#' && buffer->(i + 1) == '#') force = true;
 
     if (force) {
-      if (i > WORDSIZE && buffer->(i - 1) ~= ' ') {                    
+      if (i > WORDSIZE && buffer->(i - 1) ~= ' ') {
           LTI_Insert(i++, ' '); altered = true;
       }
       if (buffer->(i + 2) ~= ' ') {
@@ -454,8 +454,8 @@ Array InfixRV_commas --> 32;
 ! print "InfixRvalue...";
   expecting_term = true; base = 0;
   do {
-    w = NextWordStopped(); 
-    if (expecting_term) {  
+    w = NextWordStopped();
+    if (expecting_term) {
       switch (w) {
         '-//':   InfixRV_rvals-->n = 'unary-'; InfixRV_types-->n = base + 8;
         '[//':   InfixRV_rvals-->n = w;        InfixRV_types-->n = base + 6;
@@ -476,7 +476,7 @@ Array InfixRV_commas --> 32;
       }
     } else {
       expecting_term = true;
-    
+
       switch (w) {
         comma_word:
           InfixRV_rvals-->n = w; InfixRV_types-->n = base;
@@ -497,7 +497,7 @@ Array InfixRV_commas --> 32;
           InfixRV_rvals-->n = w; InfixRV_types-->n = base + 7;
         ']&', ']#':
           InfixRV_rvals-->n = w; InfixRV_types-->n = base + 10;
-         THEN1__WD :              
+         THEN1__WD :
           InfixRV_rvals-->n = w; InfixRV_types-->n = base + 12;
         '::':
           InfixRV_rvals-->n = w; InfixRV_types-->n = base + 13;
@@ -516,7 +516,7 @@ Array InfixRV_commas --> 32;
         '--':
           InfixRV_rvals-->n = 'post--'; InfixRV_types-->n = base + 9;
           expecting_term = false;
-        default:              
+        default:
           flag = true;
       }
     }
@@ -598,7 +598,7 @@ Array InfixRV_commas --> 32;
             if (InfixRV_lvals-->lop == INFIXTT_SYSFUN)
               sysfun_f = true;
         }
-       
+
         w = 0;
         i = maxi + 1; base = 100;
         if (InfixRV_types-->i == -1 && InfixRV_rvals-->i == ')//') {
@@ -634,9 +634,9 @@ Array InfixRV_commas --> 32;
                    'sibling':   acc = sibling(b);
                  }
                } else {
-                 acc = a.b(InfixRV_rvals-->rop);                   
+                 acc = a.b(InfixRV_rvals-->rop);
                }
-               
+
             2: if (sysfun_f) return -1;
                acc = a.b(InfixRV_lop-->(InfixRV_commas-->0),
                          InfixRV_rvals-->rop);
@@ -768,13 +768,13 @@ Array InfixRV_commas --> 32;
   if (second < 0 || second >= 48) "<No such attribute>";
   if (f) print "@@126";
   print (DebugAttribute) second;
-  
+
   #ifdef TARGET_ZCODE;
   if (f) @clear_attr noun second;
   else   @set_attr   noun second;
   #ifnot;
   t = second + 8;
-  if (f) @astorebit noun t 0;   ! give uno ~otro; 
+  if (f) @astorebit noun t 0;   ! give uno ~otro;
   else   @astorebit noun t 1;   ! give uno otro;
   #endif;
 ];
@@ -838,7 +838,7 @@ Array InfixRV_commas --> 32;
         nothing: print "; Constant ", (InfixPrintConstant) infix_parsed_lvalue,
                        " == ", noun, "^";
               2: <<Showobj noun>>;                 ! Object
-              1: print "Class ", (name) noun, "^"; ! Class                           
+              1: print "Class ", (name) noun, "^"; ! Class
                  objectloop (a ofclass noun) {
                    if (flag) print ", "; else print "Contains: ";
                    print (name) a, " (", a, ")"; flag = true;
@@ -936,7 +936,7 @@ Array InfixRV_commas --> 32;
             }
           }
         }
-      }   
+      }
       #Ifnot;
       for (b = 0 : b < #dictionary_table-->0 : b++) {
         w = #dictionary_table + WORDSIZE + b * (DICT_WORD_SIZE + 7);
@@ -1058,7 +1058,7 @@ Array InfixRV_commas --> 32;
     @clear_attr noun infix__watching;
     #ifnot;
     t = infix__watching + 8;
-    @astorebit noun t 0; ! give uno ~otro; 
+    @astorebit noun t 0; ! give uno ~otro;
     #endif;
     "; Not watching object ~", (name) noun, "~ (", noun, ").";
   }
@@ -1089,7 +1089,7 @@ Array InfixRV_commas --> 32;
 ![ vInfixList from to tab filter i flag;
 !    print "Called with from ",from," to ",to," table ",tab;
 !    for (i=from : i<=to : i++)
-!    {      
+!    {
 !        print "(",i,"=",tab-->(i-from),")";
 !        if (tab-->(i-from)) {
 !            flag = true;
@@ -1107,7 +1107,7 @@ Array InfixRV_commas --> 32;
 !            }
 !            if (flag) print (string) tab-->(i-from), " ";
 !        }
-!     }   
+!     }
 !    new_line;
 !];
 
@@ -1161,11 +1161,11 @@ Array InfixRV_commas --> 32;
   #ifnot;
 ! InfixList(#identifiers_table-->1, #highest_property_number,
 !           #property_names_array + (#identifiers_table-->1) * 4);     ! , GLULX, 1element = 4bytes
-  InfixList((#identifiers_table-->1), (#identifiers_table-->3) + (#identifiers_table-->1) - 1, 
+  InfixList((#identifiers_table-->1), (#identifiers_table-->3) + (#identifiers_table-->1) - 1,
             #property_names_array + (#identifiers_table-->1 - 1) * 4); ! , GLULX, 1element = 4bytes
 
 ! l = INDIV_PROP_START + #identifiers_table-->3;
-! print ":::",INDIV_PROP_START," ",#identifiers_table-->3," ",#identifiers_table-->1,"^";!    
+! print ":::",INDIV_PROP_START," ",#identifiers_table-->3," ",#identifiers_table-->1,"^";!
 ! 256 start position of individual properties
 ! 22 Number of individual properties
 ! 51 Number of common properties

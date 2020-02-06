@@ -82,7 +82,7 @@ Global betamode = false;
   "^Se ha activado el modo betatesting. Podrá introducir comentarios comenzando
    la línea con un '!' y no serán interpretados por el juego.";
 ];
-	
+
 [ ScriptOffSub;
   if (betamode) {
     print "Esto también desactivará automáticamente el modo betatesting.

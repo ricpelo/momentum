@@ -12,17 +12,17 @@
 ! CUSTOMIZATION
 !------------------------------------------------------------------------------
 !
-! You can customize the strings this library will print by either overriding 
-! the default values or setting the appropriate self.D_....__TX from within the 
-! game. 
+! You can customize the strings this library will print by either overriding
+! the default values or setting the appropriate self.D_....__TX from within the
+! game.
 !
 ! D_AWAY__TX is used when the player types 'Q' to exit the diary
 ! D_UPDT__TX is printed when the diary is updated
 ! D_INFO__TX is printed when the diary is updated for the first time.
 !
-! You can use special formatting in D_UPDT__TX and D_INFO__TX: see the 
-! FormatText routine for information. If you don't need this fancy stuff, 
-! define NoFormat somewhere before inclusion of the library. 
+! You can use special formatting in D_UPDT__TX and D_INFO__TX: see the
+! FormatText routine for information. If you don't need this fancy stuff,
+! define NoFormat somewhere before inclusion of the library.
 !
 ! This library uses the colour patch by Adam Cadre that'll correctly restore
 ! colors upon UNDO and RESTORE; see http://www.adamcadre.ac/inform.html
@@ -32,22 +32,22 @@
 ! below.
 !
 ! The only things you'll have to change directly are the "Go to what page" box
-! (since Inform can't handle 'box self.D_PAGE__TX') and the key handling, 
+! (since Inform can't handle 'box self.D_PAGE__TX') and the key handling,
 ! should you change the default keys from P, N, Q and G.
 !
 !------------------------------------------------------------------------------
 ! HOW TO USE IT
 !------------------------------------------------------------------------------
 !
-! Use "Diary objectname" to define the class. Whatever you give for a 
+! Use "Diary objectname" to define the class. Whatever you give for a
 ! description will be printed on the title page. The object's short name will
-! be displayed on the first line of the screen. The game will automatically 
+! be displayed on the first line of the screen. The game will automatically
 ! wait for any key, then display the next page.
 !
-! Example:   
+! Example:
 !
 ! Diary mydiary "Adventurer's Diary"
-! with  
+! with
 !  description
 !  [;
 !   @erase_window NULL;
@@ -55,11 +55,11 @@
 !       "----------------------"
 !       " THIS IS MINE SO KEEP "
 !       "    YOUR HANDS OFF    ";
-!  ];   
+!  ];
 !
 !------------------------------------------------------------------------------
 !
-! A diary page is a simple object. Its short name will be displayed on the 
+! A diary page is a simple object. Its short name will be displayed on the
 ! second line of the screen, and the description in the window itself. Be
 ! careful not to put too much text on one page.
 ! If you give the page the attribute 'on', it will be listed in the table of
@@ -76,22 +76,22 @@
 !
 ! If you want, you can use Class ContentsPage to provide a table of contents.
 ! The short name will be displayed on the second line of the screen, and you
-! can provide the PageHeader property to display a short text before the 
-! table begins. If you need several content pages, just define them; they will 
+! can provide the PageHeader property to display a short text before the
+! table begins. If you need several content pages, just define them; they will
 ! be left empty if unneeded.
 !
 ! Example:
 !
 ! ContentsPage "Contents";
-! 
+!
 !------------------------------------------------------------------------------
 !
-! DO NOT MOVE ANY PAGES INTO THE DIARY YOURSELF!    
+! DO NOT MOVE ANY PAGES INTO THE DIARY YOURSELF!
 !
 ! You must use diary.update(pagename, flag) for this reason, or the diary
 ! will not open on the correct page.
-!  
-! Use diary.update(pagename, 2) to insert content pages or if you want to 
+!
+! Use diary.update(pagename, 2) to insert content pages or if you want to
 ! add a page without notifying the user.
 !
 ! Use diary.update(pagename, 1) to insert the first of a number of pages (or
@@ -99,13 +99,13 @@
 !
 ! Use diary.update(pagename) to insert the rest of the pages. The game will
 ! silently add them but not update the page counter, so the diary will open
-! on the last page inserted with flag 1.       
+! on the last page inserted with flag 1.
 !
 !------------------------------------------------------------------------------
 ! WHAT ELSE YOU NEED
 !------------------------------------------------------------------------------
 !
-! A verb 'diary' plus a subroutine 'DiarySub' (or whatever you want to call 
+! A verb 'diary' plus a subroutine 'DiarySub' (or whatever you want to call
 ! them) that look similar to these:
 !
 ! [ DiarySub;
@@ -122,19 +122,19 @@ Include "IString";
 
 
 Class Diary
-  with    
+  with
     D_PKEY__TX "<- = Página anterior",
     D_NKEY__TX "-> = Página siguiente",
     D_QKEY__TX " Q = Volver al juego",
     D_GKEY__TX " G = Ir a una página ",
     D_PAGE__TX "Página ",
     D_AWAY__TX "Cierras el diario.^",
-    D_UPDT__TX "Tu diario se ha actualizado.",         
+    D_UPDT__TX "Tu diario se ha actualizado.",
     D_INFO__TX "Teclea @<<%BDIARIO%P@>> para leer la última entrada.",
-    update [ flag;   
+    update [ flag;
       !Pmove(page, self);
 !      give page on;
-      self.notify(flag);      
+      self.notify(flag);
     ],
     notify [ flag
       o;
@@ -151,13 +151,13 @@ Class Diary
         print "^[";
         FormatText(self.D_UPDT__TX);
         if (self.message == 0) {
-          self.message = 1;    
+          self.message = 1;
           print " ";
-          FormatText(self.D_INFO__TX); 
+          FormatText(self.D_INFO__TX);
           print "]^";
         } else "]";
-      } 
-      
+      }
+
 !      if (flag == 2) self.last_page = children(self);
     ],
     last_page 0,
@@ -226,7 +226,7 @@ Class Diary
 !      new_line; new_line;
 !    ],
     Diary_HandleGlkEvent [ ev context buffer;
-      if (self has general) {     ! Si estamos mostrando el diario... 
+      if (self has general) {     ! Si estamos mostrando el diario...
         context = context;
         buffer = buffer;
         switch (ev-->0) {
@@ -246,13 +246,13 @@ Class Diary
       print (string) self.D_AWAY__TX;
       rtrue;
     ],
-    page 0, 
+    page 0,
     pagen 0,
-    doname [; 
+    doname [;
       !print (name) self;
       return self.short_name;
     ],
-    dopagename [; 
+    dopagename [;
       !print (name) self.page;
       return self.page;
     ],
@@ -353,7 +353,7 @@ Class DiaryEntry
       }
     ];
 
-    
+
 Class ContentsPage
   class DiaryEntry
   with
@@ -396,12 +396,12 @@ Class ContentsPage
       return (self.page) * (i - 5) + 1;
     ],
     page 0,
-    PageHeader [; 
+    PageHeader [;
       rtrue;
     ],
     ListItem 0,
     PrintItem [;
-      return self.ListItem.short_name; 
+      return self.ListItem.short_name;
 !      print (name) self.ListItem;
     ],
     ListEntry [ num
@@ -425,7 +425,7 @@ Array printed_text -> 104;
 
 [ Colour f b;
   SetColour(f, b);
-];             
+];
 
 [ FormatText format j k;
   j = PrintAnyToArray(printed_text + WORDSIZE, 100, format);
@@ -461,7 +461,7 @@ Array printed_text -> 104;
       }
     } else print (char) printed_text->k;
   }
-];   
+];
 
 #endif;
 

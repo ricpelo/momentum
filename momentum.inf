@@ -104,13 +104,13 @@ Constant GT_ZEROEXIT     = "No decir nada.";
 !  glk($0086, 8); ! set input style
 !  glk($100, 48);
 !  print "0";
-!  glk($100, 0); 
+!  glk($100, 0);
 !  glk($0086, 0); ! set input style
 !  print " para salir) ";
 !];
 
 ! Valores iniciales de los parámetros relacionados con el buffer de texto:
-Constant INICIAL_MONOSIZE = 170; 
+Constant INICIAL_MONOSIZE = 170;
 Constant INICIAL_PROPSIZE = 200;
 Constant INICIAL_LEADING  = 25;
 Constant INICIAL_BASELINE = 17;
@@ -403,7 +403,7 @@ Include "Parser";
                                                 r.ZIPI_secundario());
                   long = long + PrintAnyToArray(buffer + WORDSIZE + long,
                                                 INPUT_BUFFER_LEN - WORDSIZE,
-                                                " ");                                          
+                                                " ");
                 }
                 buffer-->0 = long;
                 if (r has general) {
@@ -440,7 +440,7 @@ Include "Parser";
           buffer-->0 = buffer-->0 + long;
           glk_request_line_event(gg_mainwin, buffer + WORDSIZE,
                                  INPUT_BUFFER_LEN - WORDSIZE, buffer-->0);
-          return 1;  ! Retornamos 1 para que el jugador pueda seguir tecleando 
+          return 1;  ! Retornamos 1 para que el jugador pueda seguir tecleando
         } else {
           glk_set_style(style_Input);
           Tokenise__(buffer, parse);
@@ -451,7 +451,7 @@ Include "Parser";
             if (parse-->r == ',//') jump Imprimir;
           }
           ! Si la primera palabra del buffer es un verbo, no mostramos ve ni ex:
-          if (LanguageIsVerb(buffer, parse, 1)) jump Imprimir;  
+          if (LanguageIsVerb(buffer, parse, 1)) jump Imprimir;
           if (obj ofclass Lugar) print "ve ";
           else                   print "ex ";
         .Imprimir;
@@ -546,7 +546,7 @@ Include "Parser";
                         stylehint_Oblique, 1);
       glk_stylehint_set(wintype_TextBuffer, style_Alert,
                         stylehint_Weight, 1);
- 
+
       glk_stylehint_set(wintype_TextBuffer, style_Emphasized,
                         stylehint_TextColor, $ffffff);
       glk_stylehint_set(wintype_TextBuffer, style_Emphasized,
@@ -612,7 +612,7 @@ Include "Parser";
                         stylehint_Proportional, 0);
       glk_stylehint_set(wintype_TextGrid, style_Normal,
                         stylehint_Justification, stylehint_just_LeftRight);
-         
+
       glk_stylehint_set(wintype_TextGrid, style_Input,
                         stylehint_TextColor, $a1d0fc);
       glk_stylehint_set(wintype_TextGrid, style_Input,
@@ -623,7 +623,7 @@ Include "Parser";
                         stylehint_Proportional, 0);
       glk_stylehint_set(wintype_TextGrid, style_Input,
                         stylehint_Weight, 1);
- 
+
       glk_stylehint_set(wintype_TextGrid, style_User1,
                         stylehint_TextColor, $a1d0fc);
       glk_stylehint_set(wintype_TextGrid, style_User1,
@@ -634,7 +634,7 @@ Include "Parser";
                         stylehint_Proportional, 0);
       glk_stylehint_set(wintype_TextGrid, style_User1,
                         stylehint_Weight, 1);
-  
+
       glk_stylehint_set(wintype_TextGrid, style_User2,
                         stylehint_TextColor, $000000);
       glk_stylehint_set(wintype_TextGrid, style_User2,
@@ -946,7 +946,7 @@ Class Lugar
           r = ConexionLocalidad(noun);
           if (r) <<Go r>>;
         }
-        
+
       GetOff:
         if (noun == LugarReal()) <<Exit>>;
         rfalse;
@@ -959,7 +959,7 @@ Class Lugar
     ],
   has
     scenery light;
-    
+
 
 #ifdef DEBUG;
 ! En modo depuración podemos saltarnos la espera pulsando una tecla:
@@ -1061,7 +1061,7 @@ Include "Timer";            ! Mi librería de eventos temporizados
 
   ! Nombre de la oscuridad
   thedark.short_name = "Oscuridad";
-  
+
   ! Localización donde comienza el jugador
   location = cuarto_katie;
 
@@ -1247,7 +1247,7 @@ Include "Timer";            ! Mi librería de eventos temporizados
   if (action_to_be == ##ExaminarFalso) PlaceInScope(l);
 
   ! Así podemos usar "VE AL SALON" y "EXAMINA EL SALON" en lugar de
-  ! "VE AL SUR" y "EXAMINA EL SUR" (ver también la clase Lugar): 
+  ! "VE AL SUR" y "EXAMINA EL SUR" (ver también la clase Lugar):
   if (l provides n_to)   PonerLugarAlAlcance(l, n_to);
   if (l provides s_to)   PonerLugarAlAlcance(l, s_to);
   if (l provides e_to)   PonerLugarAlAlcance(l, e_to);
@@ -1266,7 +1266,7 @@ Include "Timer";            ! Mi librería de eventos temporizados
   if (actor == becca && LugarReal() ~= cocina_katie) {
     PlaceInScope(telefono_katie);
   }
-  
+
   rfalse;
 ];
 
@@ -1553,7 +1553,7 @@ Class Personaje
       for ( : _vararg_count > 0: _vararg_count--) {
         @copy sp msg;
         if (msg ofclass String) {
-          if (hablado) {          
+          if (hablado) {
             switch (self.dice_retardo) {
               -1:
                0: KeyDelay();
@@ -1647,7 +1647,7 @@ Class Personaje
   has
     animate proper;
 
-    
+
 !===============================================================================
 ! (8) Objetos del Juego
 !-------------------------------------------------------------------------------
@@ -1848,7 +1848,7 @@ Object timer_imagen_personaje
 
       'q', 'Q', 27, 131, 10, 8, -2, keycode_Escape:
         rfalse;
- 
+
       132, 13, ' ', -3, -6:
     .Aceptar;
         if (cur == count - 1) rfalse;
@@ -2166,7 +2166,7 @@ Object ZIPI_Jugar_Con_Intro
       return 2;
     ];
 
-    
+
 Object ZIPI_Jugar_Sin_Intro
   class ZIPI_Otro
   with
@@ -2266,7 +2266,7 @@ Object ZIPI_Restaurar_Partida
       print "^Error: no se ha podido cargar la partida.";
       rfalse;
     ];
-      
+
 
 Object ZIPI_Reflow
   class ZIPI_Otro
@@ -2339,7 +2339,7 @@ Object ZIPI_Tamano_Graficos
         GRAFICOS_GRANDES:    "Tamaño de gráficos: ",
                              GRAFICOS_GRANDES,  " px. (GRANDES)";
         default:             "Tamaño de gráficos: ",
-                             anchoVentanaGrafica, " px.";          
+                             anchoVentanaGrafica, " px.";
       }
     ],
     ZIPI_informacion "Cambia el tamaño de los gráficos mostrados durante el
@@ -2761,7 +2761,7 @@ Object Menu_Encender
       return obj has switchable && obj hasnt on;
     ];
 
-    
+
 Object Menu_Examinar
   class ZIPI_Otro
   with
@@ -2951,7 +2951,7 @@ Object Menu_Ayuda
     ZIPI_titulo "Ayuda",
     ZIPI_ejecutar [; return "ayuda"; ];
 
-    
+
 Object Menu_Diario
   class ZIPI_Otro
   with
@@ -3242,7 +3242,7 @@ Object Menu_Configuracion
     default: print "hacia ", (the) i;
   }
   l = LugarReal();
-    
+
   if (par) print " (";
   if (~~(i == in_obj or out_obj)) print "hacia ";
   MostrarNombreLink(l.(i.door_dir));
@@ -3492,7 +3492,7 @@ Object Menu_Configuracion
   for (i = 0 : i < veces : i++) {
     viewImageCenter(imagen, true);
     WaitDelay(retardo);
-  }  
+  }
 ];
 
 
@@ -3627,7 +3627,7 @@ Verb meta 'musica'
   * 'off'/'apagada'/'no'/ 'nx'        -> ApagarMusica;
 
 Verb 'no.verb' * noun -> ExaminarFalso;
- 
+
 Verb meta 'pistas'
   *                 -> Pistas
   * 'no' / 'nx'     -> PistasNo;
@@ -3680,7 +3680,7 @@ Verb 'ven'
 
 Verb meta 'verbo.nulo'
   *                  -> VerboNulo;
-  
+
 #ifdef DEBUG;
 Verb meta 't'
   *                    -> TestPasoAPaso;
@@ -3706,7 +3706,7 @@ Verb meta 'tt'
   DespuesReflow();
 ];
 
-  
+
 [ ApagarMusicaSub;
   haySonidoFondo = false;
   Damusix.VolumenCanal(CANAL_FONDO, 0);
@@ -3741,7 +3741,7 @@ Verb meta 'tt'
   ZIPI_Configuracion.ha_cambiado_algo = false;
 
   ZIPI_RunMenu(ZIPI_Configuracion, true);
-  
+
   rflw = ZIPI_Configuracion.ha_cambiado_algo && ZIPI_Configuracion.reflow;
   ZIPI_Configuracion.ha_cambiado_algo = false;
 
@@ -3881,7 +3881,7 @@ Verb meta 'tt'
 [ GritarSub;
 !  pagina_contenidos.update(1);
 !  diario_llave.update();
-!  diario_ticket.update();  
+!  diario_ticket.update();
 !  diario_amigos.update();
 !  mi_diario.update(p2, 1);
   "Emites un sonoro grito, pero nadie responde.";

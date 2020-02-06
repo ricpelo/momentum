@@ -190,7 +190,7 @@ Class objeto_barra_estado
     ! Limpia una línea en roman o en reverso
     limpiar_linea [i ancho;
       i = i; ancho = ancho;
-      #ifdef TARGET_ZCODE; 
+      #ifdef TARGET_ZCODE;
         if ((self.&lineas_inv-->(i - 1)) == BE_INV_TOTAL) style reverse;
         spaces(ancho);
         style roman;
@@ -267,7 +267,7 @@ Class objeto_barra_estado
         self.columna = self.columna + 2;
       #endif;
     ],
-    ! Recorre salidas e imprime 
+    ! Recorre salidas e imprime
     imprimir_brsa [ x i j siempre nunca;
       #ifdef ADMITIR_COMANDO_SALIDAS;
         if (location == thedark) j = real_location;

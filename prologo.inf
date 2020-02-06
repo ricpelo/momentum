@@ -97,7 +97,7 @@ Object decorado_cuarto_katie cuarto_katie
       'cama' "Te gusta dormir cómoda, y por ello tu cama tiene casi el doble
               de ancho que una cama normal, pero ahora, sin tener muy claro
               el por qué, se te antoja poco acogedora." G_FEMENINO
-      'lampara' "Una lámpara que emite una tenue luz especialmente verdosa." 
+      'lampara' "Una lámpara que emite una tenue luz especialmente verdosa."
                 G_FEMENINO
       'mesita' "" G_FEMENINO
       'puerta' "La puerta de tu habitación permanece entreabierta." G_FEMENINO;
@@ -212,7 +212,7 @@ Object pasillo_katie "Pasillo del piso superior"
              espalda en forma de escalofríos continuos y persistentes.";
       if (puerta_katie notin self) {
         " La ", (link) "puerta", " abierta a ", (link) cuarto_katie, " es
-        prácticamente la única fuente de luz en este lúgubre pasaje."; 
+        prácticamente la única fuente de luz en este lúgubre pasaje.";
       } else {
         new_line;
       }
@@ -280,7 +280,7 @@ Object salon_katie "Salón"
     before [;
       Go:
         if (noun == n_obj && frigorifico_katie has open &&
-            frigorifico_katie hasnt general) frigorifico_katie.se_abre_solo(); 
+            frigorifico_katie hasnt general) frigorifico_katie.se_abre_solo();
     ];
 
 
@@ -311,8 +311,8 @@ Object decorado_salon_katie salon_katie
                  tacto resulta resbaladizo, frío y duro. Permanece estático en
                  el centro de la estancia." 0
       'mesa'     "" G_FEMENINO;
-    
-    
+
+
 ! ====================================================================
 ! OBJETOS QUE LLEVAN LOS PERSONAJES AL EMPEZAR
 ! ====================================================================
@@ -330,10 +330,10 @@ Object uniforme_katie "uniforme"
 
       Disrobe, Drop:
         "La ocasión recomienda que sigas llevando ropa puesta...";
-        
+
       Examine, ExaminarFalso:
         rfalse;
-        
+
       default:
         "Es mejor que dejes el uniforme como está.";
     ],
@@ -461,7 +461,7 @@ Object frigorifico_katie "frigorífico" cocina_katie
       if (~~(self.ya_visto_abierto)) {
         self.ya_visto_abierto = true;
         "Ves el ", (link) self, " abierto, como una invitación a lo
-        desconocido."; 
+        desconocido.";
       } else {
         "El ", (link) self, " sigue abierto.";
       }
@@ -539,7 +539,7 @@ Object puerta_final_katie "puerta de tu habitación"
 
       Examine:
         rfalse;
-        
+
       default:
         if (noun == decorado_puerta_katie &&
             decorado_puerta_katie.palabra_usada == 'pomo' or 'picaporte') {
@@ -568,7 +568,7 @@ Object puerta_final_katie "puerta de tu habitación"
 
       Close:
         "La ", (link) "puerta", " ya está cerrada.";
-        
+
     ],
   has
     static female openable;
@@ -696,7 +696,7 @@ Object tv_cuarto_katie "televisor" cuarto_katie
 
       Enchufar:
         "El ", (link) self, " ya estaba enchufado.";
-        
+
       Desenchufar:
         "¿Para qué quieres desenchufarl", (o) self, "?";
     ],
@@ -767,7 +767,7 @@ Object tv_salon_katie "televisor" salon_katie
       ! sw == true  si viene del time_out de tv_salon_katie
       self.encender();
       cuarto_katie.sgw_mus  = Gathering_Darkness_ogg;
-      pasillo_katie.sgw_mus = cuarto_katie.sgw_mus;  
+      pasillo_katie.sgw_mus = cuarto_katie.sgw_mus;
       cocina_katie.sgw_mus  = cuarto_katie.sgw_mus;
       salon_katie.sgw_mus   = cuarto_katie.sgw_mus;
       Damusix.AsignarCanal(real_location.sgw_mus, CANAL_FONDO,
@@ -824,7 +824,7 @@ Object tv_salon_katie "televisor" salon_katie
 !          "No se puede encender porque está desenchufado.";
         if (self has on) "Ya está encendido.";
         rfalse;
-        
+
       SwitchOff:
 !        if (~~(self.enchufado))
 !          "Ya está desenchufado.";
@@ -833,11 +833,11 @@ Object tv_salon_katie "televisor" salon_katie
 
       Enchufar:
         "El ", (link) self, " ya está enchufado.";
-        
+
       Desenchufar:
         "El cable del enchufe pasa por la parte trasera y no alcanzas a tirar
          de él.";
-        
+
 !      Tie:
 !        if (self.enchufado) {
 !          "El televisor ya está enchufado.";
@@ -857,7 +857,7 @@ Object tv_salon_katie "televisor" salon_katie
 !          } else {
 !            "Desenchufas el televisor.";
 !          }
-!        }     
+!        }
     ],
     after [
       c;
@@ -959,7 +959,7 @@ Object becca "Becca" cuarto_katie
                     (string) link(tv_cuarto_katie, "tele"), ". Es un rollo.";
               self.dice_fin();
             }
-            
+
           default:
             self.dice("No entiendo qué quieres decirme.");
         }
@@ -976,7 +976,7 @@ Object becca "Becca" cuarto_katie
 
       Go, GoIn, Enter, Exit, Subir, Bajar:
         return self.dice("No pienso ir sola a ninguna parte.");
-        
+
       Take:
         if (noun == telefono_katie) {
           if (LugarReal() == cocina_katie) {
@@ -1052,12 +1052,12 @@ Object katie "Katie" cuarto_katie
   has
     female;
 
-    
+
 ! ====================================================================
 ! GESTORES DE TIMER
 ! ====================================================================
 
-    
+
 Object timer_becca
   class GestorTimer
   with
@@ -1174,7 +1174,7 @@ Object sonido_tv_cuarto_katie "sonido de estática"
   class Ruido
   with
     articles "Un" "un" "un",
-    emision TV_Ruido_ogg, 
+    emision TV_Ruido_ogg,
     canal CANAL_TV_CUARTO,
     origen tv_cuarto_katie,
     intensidad NIVEL_ALTO,
@@ -1201,7 +1201,7 @@ Object sonido_tv_salon_katie "sonido de un televisor"
 !               "¿Qué pasa? ¿No lo coges?"
 !               "¿Por qué no lo coges?"
 !               "¡Pero cógelo ya! ¿Tienes miedo o qué?";
-  
+
 
 ! ====================================================================
 ! TEMAS RAIZ
@@ -1221,7 +1221,7 @@ Object tema_becca_tv "el televisor" TemasBecca
   with
     name 'televisor' 'tv' 'television' 'pantalla';
 
-    
+
 !===============================================================================
 ! (9) Otras Rutinas Reemplazadas; Rutinas Propias del Juego
 !-------------------------------------------------------------------------------
@@ -1297,7 +1297,7 @@ Object tema_becca_tv "el televisor" TemasBecca
   gg_statuswin = glk_window_open(gg_mainwin,
                                  winmethod_Above + winmethod_Fixed +
                                  winmethod_NoBorder,
-                                 1, wintype_TextGrid, GG_STATUSWIN_ROCK); 
+                                 1, wintype_TextGrid, GG_STATUSWIN_ROCK);
 !  AbrirVentanaEstado();
   RefrescarVentanasTexto();
   viewImageCenter(Nieve_TV1_jpg);
@@ -1326,7 +1326,7 @@ Object tema_becca_tv "el televisor" TemasBecca
   } else {
     print "Prólogo";
   }
-  
+
   closeGraphicWindow();
   ChangePlayer(katie);
 
@@ -1373,7 +1373,7 @@ Object tema_becca_tv "el televisor" TemasBecca
   KeyDelay();
   katie.dice("¿Qué cinta?");
   KeyDelay();
-  print "^Becca se incorpora y te mira mientras empieza a contar:^"; 
+  print "^Becca se incorpora y te mira mientras empieza a contar:^";
   becca.dice("Una cinta de vídeo, que parece normal... Se alquila, creo,
               no sé... Pero cuando la pones...");
   KeyDelay();
@@ -1441,7 +1441,7 @@ Object tema_becca_tv "el televisor" TemasBecca
   print (s_emph) "El plazo acaba hoy.";
   katie.dice_fin();
   KeyDelay();
-  
+
 !  if (v ~= 0) {
 !    glk($00D6, 500);                      ! request_timer_events
 !    glk($00D2, gg_mainwin);               ! glk_request_char_event(gg_mainwin);
@@ -1454,10 +1454,10 @@ Object tema_becca_tv "el televisor" TemasBecca
 !          Damusix.PararCanal(CANAL_FONDO);
 !          Damusix.VolumenCanal(CANAL_FONDO, v);
 !          jump Exit;
-! 
+!
 !        evtype_Timer:
 !          glk($00D6, 500);                ! request_timer_events
-! 
+!
 !        evtype_SoundNotify:
 !          glk($00D6, 0);                  ! request_timer_events
 !          jump Exit;

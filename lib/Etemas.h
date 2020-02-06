@@ -66,7 +66,7 @@
 ! un tema, no es su primera palabra. Con parsing estricto sólo sería
 ! comprendido:
 !
-!  > PREGUNTA A MANOLO SOBRE EL BUEN TIEMPO 
+!  > PREGUNTA A MANOLO SOBRE EL BUEN TIEMPO
 !  > PREGUNTA A MANOLO POR EL EURO
 !
 
@@ -112,8 +112,8 @@ Attribute parsing_normal alias absent;
     return i;
 ];
 
-       
-	
+
+
 
 [ AveriguarTema T i n k max tmax;
     max=0;  ! La mejor puntuación de momento
@@ -133,7 +133,7 @@ Attribute parsing_normal alias absent;
 		n=FlexibleInterpretarNombre(i);
 	else n=ParseNoun(i);
 	! De lo contrario, el InterpretarNombre normal
-	if (n>max) 
+	if (n>max)
 	{
 	    max=n;                 ! Actualizar máximos
 	    tmax=i;
@@ -146,5 +146,5 @@ Attribute parsing_normal alias absent;
     return(tmax);     ! Y retornar el mejor hallado
                       ! Observar que no hay intento de aclarar
                       ! ambigüedades si dos o más coincidieran en
-                      ! puntuación 
+                      ! puntuación
 ];

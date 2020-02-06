@@ -38,11 +38,11 @@ Array _GlulxBoxQuoteAux_ --> 4;
   aux = aux; ! Evita warning
   _CurrQuoteArr_ = arr;
   _CurrQuoteMaxLen_ = maxlen;
-  
+
   indent = 4;
   lastnl = true;
   lines = arr-->0;
-  
+
   if (gg_quotewin == 0) {
     gg_arguments-->0 = lines;
     i = InitGlkWindow(GG_QUOTEWIN_ROCK);
@@ -61,7 +61,7 @@ Array _GlulxBoxQuoteAux_ --> 4;
     parwin = glk_window_get_parent(gg_quotewin);
     glk_window_set_arrangement(parwin, $112, lines + 4, 0);
   }
-  
+
   if (gg_quotewin) {
     glk_window_get_size(gg_quotewin, gg_arguments, 0);
     winwide = gg_arguments-->0;
@@ -70,7 +70,7 @@ Array _GlulxBoxQuoteAux_ --> 4;
     glk_set_window(gg_quotewin);
     lastnl = false;
   }
-  
+
   new_line; if (lastnl) { new_line; }
   if (gg_quotewin) {
     glk_set_style(style_Normal); spaces indent;
@@ -79,7 +79,7 @@ Array _GlulxBoxQuoteAux_ --> 4;
     glk_set_style(style_Preformatted);
     spaces indent;
   }
-  
+
   #ifdef GBOXQUOTE_NOFRAME;
     spaces maxlen + 4;
   #ifnot;
@@ -87,10 +87,10 @@ Array _GlulxBoxQuoteAux_ --> 4;
     for (aux = 0 : aux < maxlen + 2 : aux = aux + 1) { print (char) 45; }
     print (char) 43;
   #endif; ! GBOXQUOTE_NOFRAME
-  
+
   glk_set_style(style_Normal);
   new_line;
-  
+
   for (i = 0 : i < lines : i = i + 1) {
     (arr-->(i + 1)).print_to_array(_GlulxBoxQuoteAux_, 4);
     linelen = _GlulxBoxQuoteAux_-->0;
@@ -101,26 +101,26 @@ Array _GlulxBoxQuoteAux_ --> 4;
       glk_set_style(style_Preformatted);
       spaces indent;
     }
-    
+
     #ifdef GBOXQUOTE_NOFRAME;
       spaces 2;
     #ifnot;
       print (char) 124, (char) 32;
     #endif; ! GBOXQUOTE_NOFRAME
-    
+
     print (string) arr-->(i + 1);
     spaces (maxlen - linelen);
-    
+
     #ifdef GBOXQUOTE_NOFRAME;
       spaces 2;
     #ifnot;
       print (char) 32, (char) 124;
     #endif; ! GBOXQUOTE_NOFRAME
-    
+
     glk_set_style(style_Normal);
     new_line;
   }
-  
+
   if (gg_quotewin) {
     glk_set_style(style_Normal); spaces indent;
     glk_set_style(style_BlockQuote);
@@ -128,7 +128,7 @@ Array _GlulxBoxQuoteAux_ --> 4;
     glk_set_style(style_Preformatted);
     spaces indent;
   }
-  
+
   #ifdef GBOXQUOTE_NOFRAME;
     spaces maxlen + 4;
   #ifnot;
@@ -136,10 +136,10 @@ Array _GlulxBoxQuoteAux_ --> 4;
     for (aux = 0 : aux < maxlen + 2 : aux = aux + 1) { print (char) 45; }
     print (char) 43;
   #endif; ! GBOXQUOTE_NOFRAME
-  
+
   glk_set_style(style_Normal);
   new_line; if (lastnl) { new_line; }
-  
+
   if (gg_quotewin) { glk_set_window(gg_mainwin); }
 ];
 

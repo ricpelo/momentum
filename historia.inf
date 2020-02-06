@@ -70,7 +70,7 @@ Object coche_rachel "Coche"
       i d m sel;
       Go:
         do {
-          print "[0] Volver^"; 
+          print "[0] Volver^";
           for (i = 0, m = 0: i < self.#destinos / WORDSIZE: i++) {
             d = self.&destinos-->i;
             if (d ~= 0) {
@@ -144,7 +144,7 @@ Object jardin_ruth "Jardín de la casa"
 !    input_link "jardin",
     w_to salon_ruth,
     in_to salon_ruth;
-    
+
 
 Object pasillo_ruth "Pasillo superior"
   class Lugar
@@ -317,14 +317,14 @@ Object amigos_katie "amigos de Katie"
         13: qtype = MainMenu;
             qqon = true;
         14: return Qlist(b, 3, 2, 3, 4);
-            
+
         ! Quip 2
         21: print "Hola, chicos... ¿Cómo estáis?";
         22: self.qoff(2); self.qon(3); self.qon(4);
             amiga_morena.dice("Bien.");
         23: qqon = true;
             qtransfer = 1;
-        
+
         ! Quip 3
         31: print "¿Sabéis algo de Katie?";
         32: self.qoff(3);
@@ -360,7 +360,7 @@ Object rachel "Rachel"
     name 'rachel',
     short_name "Rachel",
     description [;
-      if (player == self) "Eres tú: Rachel."; 
+      if (player == self) "Eres tú: Rachel.";
       else "Es Rachel.";
     ],
     orders [;
@@ -561,7 +561,7 @@ Object tema_ruth_cajon "el cajón del escritorio de Katie" TemasRuth
 #ifdef DEBUG;
 Verb meta 'i1'
   *                      -> InicioHistoria;
-  
+
 Verb meta 'testhistoria'
   *                      -> TestHistoria
   * 'full'               -> TestHistoriaFull;

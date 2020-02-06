@@ -41,7 +41,7 @@
 !               note: the array MUST have enough space to hold the literal.
 !          usage: WriteString(array,literal);
 !          ex: WriteString(BobStr,"Bob");
-!              
+!
 !
 !  PrintString: Prints a string array. Returns the number of character read
 !         usage: PrintString(array[,offset]);
@@ -65,7 +65,7 @@
 !               least 13.
 !
 ! LStrCat: As StrCat, but the second argument must be a literal string:
-!          (can also use a routine to print a literal string)           
+!          (can also use a routine to print a literal string)
 !       ex: LStrCat(HiStr,"World"); yields as above
 !
 ! StrCmp: Compares two strings. Returns 0 if they are the same, positive if
@@ -97,7 +97,7 @@
 !
 ! --NON-C-BASED FUNCTIONS--
 !
-! EmptyString: Generates a string of blanks.  
+! EmptyString: Generates a string of blanks.
 !        usage: EmptyString(string,number[, character]);
 !           ex: EmptyString(Bob,5); makes Bob a string of 5 space characters
 !               EmptyString(Bob,5,'.'); as above, with periods instead of spaces
@@ -106,7 +106,7 @@
 !          to LEFT, but may also be RIGHT of CENTERED.  Optional character
 !          parameter specifies character to pad the empty spaces with.
 !       usage: Justify(String, width[, alignment, character])
-!       ex:    Justify(Bob,10,RIGHT); Right-justifies Bob in a 10-space field 
+!       ex:    Justify(Bob,10,RIGHT); Right-justifies Bob in a 10-space field
 ! LJustify: As Justify, but with a literal string or routine to print one.
 !
 ! Questions, Comments, Suggestions, PLEASE e-mail me
