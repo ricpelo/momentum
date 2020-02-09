@@ -2946,6 +2946,7 @@ Object Menu_Restart
   class ZIPI_Otro
   with
     ZIPI_titulo "Reiniciar",
+    ZIPI_informacion "Reiniciar la aventura desde el principio",
     ZIPI_ejecutar [; return RESTART__WD; ];
 
 
@@ -2953,13 +2954,15 @@ Object Menu_Restore
   class ZIPI_Otro
   with
     ZIPI_titulo "Recuperar",
-   ZIPI_ejecutar [; return RESTORE__WD; ];
+    ZIPI_informacion "Cargar una situación del disco",
+    ZIPI_ejecutar [; return RESTORE__WD; ];
 
 
 Object Menu_Save
   class ZIPI_Otro
   with
     ZIPI_titulo "Guardar",
+    ZIPI_informacion "Guardar la situación actual en el disco",
     ZIPI_ejecutar [; return "guardar"; ];
 
 
@@ -2967,6 +2970,7 @@ Object Menu_Undo
   class ZIPI_Otro
   with
     ZIPI_titulo "Deshacer",
+    ZIPI_informacion "Dar marcha atrás a la última acción realizada",
     ZIPI_ejecutar [; return UNDO1__WD; ];
 
 
@@ -2974,6 +2978,7 @@ Object Menu_Score
   class ZIPI_Otro
   with
     ZIPI_titulo "Puntuación",
+    ZIPI_informacion "Mostrar la puntuación actual",
     ZIPI_condicion [; return TASKS_PROVIDED == 0; ],
     ZIPI_ejecutar [; return FULLSCORE1__WD; ];
 
@@ -2982,6 +2987,7 @@ Object Menu_Creditos
   class ZIPI_Otro
   with
     ZIPI_titulo "Créditos",
+    ZIPI_informacion "Mostrar los créditos de la aventura",
     ZIPI_ejecutar [; return "créditos"; ];
 
 
@@ -2989,6 +2995,7 @@ Object Menu_Quit
   class ZIPI_Otro
   with
     ZIPI_titulo "Terminar",
+    ZIPI_informacion "Finalizar la aventura y salir al sistema",
     ZIPI_ejecutar [; return QUIT1__WD; ];
 
 
@@ -3018,6 +3025,7 @@ Object Menu_Ayuda
   class ZIPI_Otro
   with
     ZIPI_titulo "Ayuda",
+    ZIPI_informacion "Acceder al sistema de ayuda",
     ZIPI_ejecutar [; return "ayuda"; ];
 
 
@@ -3025,6 +3033,7 @@ Object Menu_Diario
   class ZIPI_Otro
   with
     ZIPI_titulo "Diario",
+    ZIPI_informacion "Abrir el diario de Becca",
     ZIPI_ejecutar [; return "diario"; ];
 
 
@@ -3032,6 +3041,7 @@ Object Menu_Inventario
   class ZIPI_Otro
   with
     ZIPI_titulo "Inventario",
+    ZIPI_informacion "Consultar el inventario del jugador",
     ZIPI_ejecutar [; return "inventario"; ];
 
 
@@ -3039,6 +3049,7 @@ Object Menu_Mapa
   class ZIPI_Otro
   with
     ZIPI_titulo "Mapa",
+    ZIPI_informacion "Visualizar el mapa interactivo",
     ZIPI_ejecutar [; return "mapa"; ];
 
 
@@ -3046,6 +3057,7 @@ Object Menu_Configuracion
   class ZIPI_Otro
   with
     ZIPI_titulo "Configuración",
+    ZIPI_informacion "Abrir el menú de opciones",
     ZIPI_ejecutar [; return "configuracion"; ];
 
 
