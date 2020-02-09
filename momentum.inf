@@ -2670,8 +2670,9 @@ Object Menu_Abrir
   class ZIPI_Otro
   with
     ZIPI_titulo "Abrir",
-    ZIPI_ejecutar [; return 'abre'; ],
     ZIPI_informacion [ obj; print "Abrir ", (the) obj; ],
+    ZIPI_ejecutar [; return 'abre'; ],
+    ZIPI_accion [; <<Open noun>>; ],
     ZIPI_condicion [ obj;
       return obj has openable && obj hasnt open;
     ];
@@ -2682,8 +2683,8 @@ Object Menu_AbrirCon
   with
     ZIPI_titulo "Abrir con...",
     ZIPI_informacion [ obj; print "Abrir ", (the) obj, " con algo"; ],
-    ZIPI_secundario [; return 'con'; ],
     ZIPI_ejecutar [; return 'abre'; ],
+    ZIPI_secundario [; return 'con'; ],
     ZIPI_condicion [ obj;
       return obj has openable && obj hasnt open;
     ],
@@ -2697,6 +2698,7 @@ Object Menu_Apagar
     ZIPI_titulo "Apagar",
     ZIPI_informacion [ obj; print "Apagar ", (the) obj; ],
     ZIPI_ejecutar [; return 'apaga'; ],
+    ZIPI_accion [; <<SwitchOff noun>>; ],
     ZIPI_condicion [ obj;
       return obj has switchable && obj has on;
     ];
@@ -2708,6 +2710,7 @@ Object Menu_Cerrar
     ZIPI_titulo "Cerrar",
     ZIPI_informacion [ obj; print "Cerrar ", (the) obj; ],
     ZIPI_ejecutar [; return 'cierra'; ],
+    ZIPI_accion [; <<Close noun>>; ],
     ZIPI_condicion [ obj;
       return obj has openable && obj has open;
     ];
@@ -2718,8 +2721,8 @@ Object Menu_CerrarCon
   with
     ZIPI_titulo "Cerrar con...",
     ZIPI_informacion [ obj; print "Cerrar ", (the) obj, " con algo"; ],
-    ZIPI_secundario [; return 'con'; ],
     ZIPI_ejecutar [; return 'cierra'; ],
+    ZIPI_secundario [; return 'con'; ],
     ZIPI_condicion [ obj;
       return obj has openable && obj has open;
     ],
@@ -2733,6 +2736,7 @@ Object Menu_Coger
     ZIPI_titulo "Coger",
     ZIPI_informacion [ obj; print "Coger ", (the) obj; ],
     ZIPI_ejecutar [; return 'coge'; ],
+    ZIPI_accion [; <<Take noun>>; ],
     ZIPI_condicion [ obj;
       return (obj hasnt static or scenery &&
               (~~IndirectlyContains(player, obj))) &&
@@ -2746,6 +2750,7 @@ Object Menu_Dejar
     ZIPI_titulo "Dejar",
     ZIPI_informacion [ obj; print "Dejar ", (the) obj; ],
     ZIPI_ejecutar [; return 'deja'; ],
+    ZIPI_accion [; <<Drop noun>>; ],
     ZIPI_condicion [ obj;
       return obj ~= player && IndirectlyContains(player, obj);
     ];
@@ -2757,6 +2762,7 @@ Object Menu_Encender
     ZIPI_titulo "Encender",
     ZIPI_informacion [ obj; print "Encender ", (the) obj; ],
     ZIPI_ejecutar [; return 'enciende'; ],
+    ZIPI_accion [; <<SwitchOn noun>>; ],
     ZIPI_condicion [ obj;
       return obj has switchable && obj hasnt on;
     ];
@@ -2767,7 +2773,8 @@ Object Menu_Examinar
   with
     ZIPI_titulo "Examinar",
     ZIPI_informacion [ obj; print "Examinar ", (the) obj; ],
-    ZIPI_ejecutar [; return 'ex'; ];
+    ZIPI_ejecutar [; return 'ex'; ],
+    ZIPI_accion [; <<Examine noun>>; ];
 
 
 Object ZIPI_Ninguna
@@ -3276,11 +3283,61 @@ Object Menu_Configuracion
 
 ! Esta versión de ExaminarFalsoSub convierte la acción en Entrar o
 ! Examinar dependiendo de si el objeto de destino es una localidad o no:
-[ ExaminarFalsoSub;
+[ ExaminarFalsoSub
+  r long ejec;
   ! Si es el nombre de la localidad actual, la describimos:
-  if (noun == location) { PrintOrRun(noun, description); rtrue; }
-  if (noun ofclass Lugar) <<Enter noun>>;
-  else                    <<Examine noun>>;
+  if (noun == location) {
+    meta = 0;
+    PrintOrRun(noun, description);
+    rtrue;
+  }
+  if (noun ofclass Lugar) {
+    meta = 0;
+    <<Enter noun>>;
+  }
+  r = MenuAcciones.MostrarAcciones(noun);
+  if (r) {
+    ejec = r.ZIPI_ejecutar();
+    if (r hasnt general) {
+      meta = 0;
+      if (ejec == 'ex') {
+        <<Examine noun>>;
+      }
+      ImprimirPrompt();
+      glk_set_style(style_Input);
+      PrintAnything(ejec);
+      print " ";
+      MostrarNombre(noun, 2, 0, 1);
+      new_line;
+      glk_set_style(style_Normal);
+      PrintOrRun(r, ZIPI_accion);
+    } else {
+      glk_cancel_line_event(gg_mainwin, gg_event);
+      ImprimirPrompt();
+      long = PrintAnyToArray(buffer + WORDSIZE,
+                             INPUT_BUFFER_LEN - WORDSIZE,
+                             ejec);
+      long = long + PrintAnyToArray(buffer + WORDSIZE + long,
+                                    INPUT_BUFFER_LEN - WORDSIZE,
+                                    " ");
+      long = long + PrintAnyToArray(buffer + WORDSIZE + long,
+                                    INPUT_BUFFER_LEN - WORDSIZE,
+                                    MostrarNombre, noun,
+                                    2, 0, 1);          ! El objeto
+      long = long + PrintAnyToArray(buffer + WORDSIZE + long,
+                                    INPUT_BUFFER_LEN - WORDSIZE,
+                                    " ");
+      long = long + PrintAnyToArray(buffer + WORDSIZE + long,
+                                    INPUT_BUFFER_LEN - WORDSIZE,
+                                    r.ZIPI_secundario());
+      long = long + PrintAnyToArray(buffer + WORDSIZE + long,
+                                    INPUT_BUFFER_LEN - WORDSIZE,
+                                    " ");
+      buffer-->0 = long;
+      glk_request_line_event(gg_mainwin, buffer + WORDSIZE,
+                             INPUT_BUFFER_LEN - WORDSIZE, buffer-->0);
+    }
+  }
 ];
 
 
@@ -3626,7 +3683,7 @@ Verb meta 'musica'
   * 'on'/'encendida'/'si'             -> EncenderMusica
   * 'off'/'apagada'/'no'/ 'nx'        -> ApagarMusica;
 
-Verb 'no.verb' * noun -> ExaminarFalso;
+Verb meta 'no.verb' * noun -> ExaminarFalso;
 
 Verb meta 'pistas'
   *                 -> Pistas
