@@ -40,7 +40,7 @@ Object coche_rachel "Coche"
   class Lugar
   with
     name 'coche',
-    nombre_direccion "el coche",
+!    nombre_direccion "el coche",
     description "El coche de Rachel",
     destinos 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0,
     volver 0,
@@ -103,11 +103,13 @@ Object cocina_ruth "Cocina"
   class ZonaMovimientoRuth
   with
     name 'cocina',
-    nombre_direccion "la cocina",
+!    nombre_direccion "la cocina",
     description "La cocina de la casa.",
 !    input_link "cocina",
     s_to salon_ruth,
-    u_to pasillo_ruth;
+    u_to pasillo_ruth
+  has
+    female;
 
 
 Object cuarto_katie_ruth "Habitación de Katie"
@@ -115,10 +117,12 @@ Object cuarto_katie_ruth "Habitación de Katie"
   with
     name 'cuarto' 'katie',
     name_f 'habitacion',
-    nombre_direccion "la habitación de Katie",
+    input_link "habitación de Katie",
+!    nombre_direccion "la habitación de Katie",
     description "La habitación de Katie.",
-!    input_link "cuarto",
-    out_to pasillo_ruth;
+    out_to pasillo_ruth
+  has
+    female;
 
 
 Object fuera_casa_ruth "Exteriores de la casa de Ruth"
@@ -126,7 +130,7 @@ Object fuera_casa_ruth "Exteriores de la casa de Ruth"
   class Destino
   with
     name 'exterior' 'exteriores',
-    nombre_direccion "el exterior de la casa",
+    nombre_direccion "exterior de la casa",
     nombre_destino "La casa de Ruth",
     description "Estas fuera de la casa de Ruth y Katie.",
     input_link "exteriores",
@@ -139,7 +143,7 @@ Object jardin_ruth "Jardín de la casa"
   with
     name 'jardin',
     name_f 'terraza',
-    nombre_direccion "el jardín",
+!    nombre_direccion "el jardín",
     description "El jardín de la casa.",
 !    input_link "jardin",
     w_to salon_ruth,
@@ -150,7 +154,7 @@ Object pasillo_ruth "Pasillo superior"
   class Lugar
   with
     name 'pasillo',
-    nombre_direccion "el pasillo superior",
+!    nombre_direccion "el pasillo superior",
     description "El pasillo superior.",
 !    input_link "pasillo",
     d_to cocina_ruth,
@@ -162,12 +166,12 @@ Object salon_ruth "Salón de la casa"
   class ZonaMovimientoRuth
   with
     name 'salon' 'salita',
-    nombre_direccion "el salón",
+    input_link "salón",
+!    nombre_direccion "salón",
     description "El salón de la casa de Ruth y Katie.",
     out_to fuera_casa_ruth,
     e_to jardin_ruth,
     n_to cocina_ruth,
-!    input_link "salon",
     each_turn [;
       if (aidan hasnt general && aidan in self) {
         give aidan general;
@@ -255,6 +259,8 @@ Object aidan "Aidan"
     name 'aidan',
     short_name "Aidan",
     description "Es Aidan.",
+    nombre_link "Aidan",
+    input_link "aidan",
     pnj_ha_llegado [;
       if (self.tipo_de_movimiento == MOVIMIENTO_POR_META) {
         PNJ_Ruta(self, MOVIMIENTO_NINGUNO);

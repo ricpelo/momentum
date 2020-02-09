@@ -806,9 +806,14 @@ Object LibraryMessages
 
       Open:
         switch (lm_n) {
-          5: if (lm_o has door && lm_o.door_to() hasnt visited)
-               "Abres ", (the) lm_o, ", lo que te da acceso ",
-               (link_al) lm_o.door_to(), ".";
+          5: if (lm_o has door && lm_o.door_to()) {
+               print "Abres ", (the) lm_o;
+               if (lm_o.door_to() has visited) {
+                 ", lo que te da acceso ", (link_al) lm_o.door_to(), ".";
+               } else {
+                 ".";
+               }
+             }
         }
 
       Prompt:
@@ -1271,40 +1276,55 @@ Include "Timer";            ! Mi librería de eventos temporizados
 ];
 
 
-! Esta versión no muestra los puntos cardinales y representa las direcciones
-! como los nombres de los lugares a los que se llega por esa dirección:
+! Usado sólo en LanguageDirection para ahorrar código:
+[ LanguageDirectionAux obj text;
+  glk_set_hyperlink(obj);
+  print (string) text;
+  glk_set_hyperlink(0);
+];
+
+
+! Esta versión  muestra los puntos cardinales y también los lugares a los que
+! se llega por esa dirección:
 [ LanguageDirection d
   l par dest puerta;
   par = true;
   switch (d) {
-    n_to:    par = false; ! print "al norte";
-    s_to:    par = false; ! print "al sur";
-    e_to:    par = false; ! print "al este";
-    w_to:    par = false; ! print "al oeste";
-    ne_to:   par = false; ! print "al nordeste";
-    nw_to:   par = false; ! print "al noroeste";
-    se_to:   par = false; ! print "al sudeste";
-    sw_to:   par = false; ! print "al suroeste";
-    u_to:    glk_set_hyperlink(u_obj);   print "arriba"; glk_set_hyperlink(0);
-    d_to:    glk_set_hyperlink(d_obj);   print "abajo";  glk_set_hyperlink(0);
-    in_to:   glk_set_hyperlink(in_obj);  print "dentro"; glk_set_hyperlink(0);
-    out_to:  glk_set_hyperlink(out_obj); print "fuera";  glk_set_hyperlink(0);
+    n_to:    print "al "; LanguageDirectionAux(n_obj, "norte");
+    s_to:    print "al "; LanguageDirectionAux(s_obj, "sur");
+    e_to:    print "al "; LanguageDirectionAux(e_obj, "este");
+    w_to:    print "al "; LanguageDirectionAux(w_obj, "oeste");
+    ne_to:   print "al "; LanguageDirectionAux(ne_obj, "nordeste");
+    nw_to:   print "al "; LanguageDirectionAux(nw_obj, "noroeste");
+    se_to:   print "al "; LanguageDirectionAux(se_obj, "sudeste");
+    sw_to:   print "al "; LanguageDirectionAux(sw_obj, "suroeste");
+    u_to:    print "hacia "; LanguageDirectionAux(u_obj, "arriba");
+    d_to:    print "hacia "; LanguageDirectionAux(d_obj, "abajo");
+    in_to:   print "hacia "; LanguageDirectionAux(in_obj, "dentro");
+    out_to:  print "hacia "; LanguageDirectionAux(out_obj, "fuera");
     default: return RunTimeError(9, d);
   }
   l = LugarReal();
-  print " ";
-  if (par) print "(";
   dest = l.d;
-  if (dest has door && dest has open) {
+
+  if (dest has door) {
     puerta = dest;
     dest = dest.d;
+    if (par) print " (";
+    if (dest has visited) {
+      MostrarNombreLink(dest);
+      print ", por ";
+      MostrarNombreLink(puerta);
+    } else {
+      print "por ";
+      MostrarNombreLink(puerta);
+    }
+    if (par) print ")";
+  } else if (dest has visited) {
+    if (par) print " (";
     MostrarNombreLink(dest);
-    print ", por ";
-    MostrarNombreLink(puerta);
-  } else {
-    MostrarNombreLink(dest);
+    if (par) print ")";
   }
-  if (par) print ")";
 ];
 
 
@@ -2031,7 +2051,7 @@ Object ZIPI_Avanzadas
   with
     ZIPI_titulo "Opciones avanzadas",
     ZIPI_informacion "Cambiar algunas opciones avanzadas que afectan al juego",
-    ZIPI_anchura 50,
+    ZIPI_anchura 46,
     ZIPI_item
       ZIPI_Tiempo_Real
       ZIPI_Mostrar_Hyperlinks
@@ -2044,7 +2064,7 @@ Object ZIPI_Configuracion
   with
     ZIPI_titulo "Opciones de configuración",
     ZIPI_informacion "Cambiar algunas opciones de configuración del juego",
-    ZIPI_anchura 45,
+    ZIPI_anchura 46,
     ha_cambiado_algo false,
     monosize INICIAL_MONOSIZE,
     propsize INICIAL_PROPSIZE,
