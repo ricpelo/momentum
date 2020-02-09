@@ -1383,7 +1383,7 @@ Include "Timer";            ! Mi librería de eventos temporizados
   print "¿Realmente quieres abandonar el juego? ";
   if (YesOrNo() ~= 0) {
     print (s_input) " Sí^";
-    if (~~autoguardador.se_ha_guardado) {
+    if (~~(autoguardador.se_ha_guardado)) {
       print "¿Deseas guardar la partida antes de salir? ";
       if (YesOrNo() ~= 0) {
         print (s_input) "Sí^";
@@ -1854,10 +1854,15 @@ Object timer_imagen_personaje
         if (cur == count - 1) rfalse;
         if (cur == count - 2) break;
         dest = _m.&ZIPI_item-->cur;
-        if (dest ofclass ZIPI_Menu)          ZIPI_RunMenu(dest);
-        else if (dest ofclass ZIPI_Pista)    ZIPI_RunPista(dest);
-        else if (dest provides ZIPI_cambiar) dest.ZIPI_cambiar();
-        else {
+        if (dest ofclass ZIPI_Menu) {
+          if (ZIPI_RunMenu(dest) == 2) {
+            return 2;
+          }
+        } else if (dest ofclass ZIPI_Pista) {
+          ZIPI_RunPista(dest);
+        } else if (dest provides ZIPI_cambiar) {
+          dest.ZIPI_cambiar();
+        } else {
           glk_request_mouse_event(gg_statuswin);
           r = ZIPI_RunOtro(dest);
           glk_cancel_mouse_event(gg_statuswin);
@@ -2149,39 +2154,76 @@ Object ZIPI_Graficos
     ];
 
 
-Object ZIPI_Jugar_Con_Intro
+Object ZIPI_Jugar_ConIntro
   class ZIPI_Otro
   with
     ZIPI_titulo "Comenzar la aventura con introducción",
     ZIPI_informacion "Comienza la aventura desde el principio",
     ZIPI_ejecutar [;
+      return self.iniciar(false);
+    ],
+    iniciar [ t;
       StatusLineHeight(1);
       glk_window_clear(gg_statuswin);
       glk_set_window(gg_mainwin);
       clearTextWindow();
       if (hayGraficos) EncenderGraficos();
       else             ApagarGraficos();
-      Introduccion();
-      IniciarAventura();
+      if (~~t) Introduccion();
+      IniciarAventura(t);
       return 2;
     ];
 
 
-Object ZIPI_Jugar_Sin_Intro
+Object ZIPI_Jugar_SinIntro
   class ZIPI_Otro
   with
     ZIPI_titulo "Comenzar la aventura saltando la introducción",
     ZIPI_informacion "Comenzar la aventura directamente sin ver la
                       introducción",
     ZIPI_ejecutar [;
-      StatusLineHeight(1);
-      glk_window_clear(gg_statuswin);
-      glk_set_window(gg_mainwin);
-      clearTextWindow();
-      if (hayGraficos) EncenderGraficos();
-      else             ApagarGraficos();
-      IniciarAventura(true);
-      return 2;
+      return ZIPI_Jugar_ConIntro.iniciar(true);
+    ];
+
+
+Object ZIPI_Jugar_ConIntro_ConAutoload
+  class ZIPI_Menu
+  with
+    ZIPI_titulo "Comenzar la aventura con introducción",
+    ZIPI_informacion "Comienza la aventura desde el principio",
+    ZIPI_anchura 46,
+    ZIPI_item
+      ZIPI_Si_ConIntro;
+
+
+Object ZIPI_Jugar_SinIntro_ConAutoload
+  class ZIPI_Menu
+  with
+    ZIPI_titulo "Comenzar la aventura saltando la introducción",
+    ZIPI_informacion "Comenzar la aventura directamente sin ver la
+                      introducción",
+    ZIPI_anchura 46,
+    ZIPI_item
+      ZIPI_Si_SinIntro;
+
+
+Object ZIPI_Si_ConIntro
+  class ZIPI_Otro
+  with
+    ZIPI_titulo "Seguro que sí",
+    ZIPI_informacion "¿Seguro? Perderá los progresos autoguardados",
+    ZIPI_ejecutar [;
+      return ZIPI_Jugar_ConIntro.ZIPI_ejecutar();
+    ];
+
+
+Object ZIPI_Si_SinIntro
+  class ZIPI_Otro
+  with
+    ZIPI_titulo "Seguro que sí",
+    ZIPI_informacion "¿Seguro? Perderá los progresos autoguardados",
+    ZIPI_ejecutar [;
+      return ZIPI_Jugar_SinIntro.ZIPI_ejecutar();
     ];
 
 
@@ -2190,8 +2232,8 @@ Object ZIPI_Menu_Principal
   with
     ZIPI_titulo "EL CÍRCULO - (c) Alpha Aventuras 2012",
     ZIPI_item
-      ZIPI_Jugar_Con_Intro
-      ZIPI_Jugar_Sin_Intro
+      ZIPI_Jugar_ConIntro
+      ZIPI_Jugar_SinIntro
       ZIPI_Restaurar_Partida
       ZIPI_Configuracion
       ZIPI_Separador
@@ -2204,8 +2246,8 @@ Object ZIPI_Menu_Principal_Con_AutoLoad
     ZIPI_titulo "EL CÍRCULO - (c) Alpha Aventuras 2012",
     ZIPI_item
       ZIPI_Continuar_Partida
-      ZIPI_Jugar_Con_Intro
-      ZIPI_Jugar_Sin_Intro
+      ZIPI_Jugar_ConIntro_ConAutoload
+      ZIPI_Jugar_SinIntro_ConAutoload
       ZIPI_Restaurar_Partida
       ZIPI_Configuracion
       ZIPI_Separador
