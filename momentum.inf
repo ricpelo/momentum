@@ -3371,70 +3371,6 @@ Object Menu_Configuracion
 ];
 
 
-! Esta versión de ExaminarFalsoSub convierte la acción en Entrar o
-! Examinar dependiendo de si el objeto de destino es una localidad o no:
-[ ExaminarFalsoSub
-  r long ejec;
-  ! Si es el nombre de la localidad actual, la describimos:
-  if (noun == location) {
-    meta = 0;
-    PrintOrRun(noun, description);
-    rtrue;
-  }
-  if (noun ofclass Lugar) {
-    meta = 0;
-    <<Enter noun>>;
-  }
-  if (ZIPI_Menu_Solo_Hyperlinks.menuSoloHyperlinks) {
-    meta = 0;
-    <<Examine noun>>;
-  }
-  r = MenuAcciones.MostrarAcciones(noun);
-  if (r) {
-    ejec = r.ZIPI_ejecutar();
-    if (r hasnt general) {
-      meta = 0;
-      if (ejec == 'ex') {
-        <<Examine noun>>;
-      }
-      ImprimirPrompt();
-      glk_set_style(style_Input);
-      PrintAnything(ejec);
-      print " ";
-      MostrarNombre(noun, 2, 0, 1);
-      new_line;
-      glk_set_style(style_Normal);
-      PrintOrRun(r, ZIPI_accion);
-    } else {
-      glk_cancel_line_event(gg_mainwin, gg_event);
-      ImprimirPrompt();
-      long = PrintAnyToArray(buffer + WORDSIZE,
-                             INPUT_BUFFER_LEN - WORDSIZE,
-                             ejec);
-      long = long + PrintAnyToArray(buffer + WORDSIZE + long,
-                                    INPUT_BUFFER_LEN - WORDSIZE,
-                                    " ");
-      long = long + PrintAnyToArray(buffer + WORDSIZE + long,
-                                    INPUT_BUFFER_LEN - WORDSIZE,
-                                    MostrarNombre, noun,
-                                    2, 0, 1);          ! El objeto
-      long = long + PrintAnyToArray(buffer + WORDSIZE + long,
-                                    INPUT_BUFFER_LEN - WORDSIZE,
-                                    " ");
-      long = long + PrintAnyToArray(buffer + WORDSIZE + long,
-                                    INPUT_BUFFER_LEN - WORDSIZE,
-                                    r.ZIPI_secundario());
-      long = long + PrintAnyToArray(buffer + WORDSIZE + long,
-                                    INPUT_BUFFER_LEN - WORDSIZE,
-                                    " ");
-      buffer-->0 = long;
-      glk_request_line_event(gg_mainwin, buffer + WORDSIZE,
-                             INPUT_BUFFER_LEN - WORDSIZE, buffer-->0);
-    }
-  }
-];
-
-
 [ ExisteAutoSave
   fref;
   fref = glk_fileref_create_by_name(fileusage_SavedGame + fileusage_BinaryMode,
@@ -3743,7 +3679,7 @@ Verb meta 'creditos'
 Verb 'cuentale' = 'cuenta';
 
 Extend 'di' first
-  * 'a' creature             -> Answer;
+  * 'a//' creature            -> Answer;
 
 Verb meta 'graficos'
   *                           -> Graficos
@@ -3760,7 +3696,7 @@ Extend only 'grita' replace
 Extend 'habla' first
   * 'con' creature topic     -> Tell
   * 'con' creature           -> Tell
-  * 'a' creature             -> Tell;
+  * 'a//' creature           -> Tell;
 
 Verb 'hola'
   *                 -> Saludar;
@@ -3831,6 +3767,10 @@ Verb 'ven'
 
 Verb meta 'verbo.nulo'
   *                  -> VerboNulo;
+
+Verb meta 'menu'
+  *                  -> Menu
+  * noun             -> Menu;
 
 #ifdef DEBUG;
 Verb meta 't'
@@ -4000,6 +3940,27 @@ Verb meta 'tt'
 ];
 
 
+! Esta versión de ExaminarFalsoSub convierte la acción en Entrar o
+! Examinar dependiendo de si el objeto de destino es una localidad o no:
+[ ExaminarFalsoSub;
+  ! Si es el nombre de la localidad actual, la describimos:
+  if (noun == location) {
+    meta = 0;
+    PrintOrRun(noun, description);
+    rtrue;
+  }
+  if (noun ofclass Lugar) {
+    meta = 0;
+    <<Enter noun>>;
+  }
+  if (ZIPI_Menu_Solo_Hyperlinks.menuSoloHyperlinks) {
+    meta = 0;
+    <<Examine noun>>;
+  }
+  <<Menu noun>>;
+];
+
+
 [ GraficosGrandesSub;
   anchoVentanaGrafica = GRAFICOS_GRANDES;
   EncenderGraficosSub();
@@ -4046,6 +4007,57 @@ Verb meta 'tt'
 
 [ LlamarSub;
   "¿Llamar a qué o a quién?";
+];
+
+
+[ MenuSub
+  r long ejec;
+  if (noun == nothing) {
+    "Debes indicar el objeto del que deseas sacar su menú. Por ejemplo: ", (s_input) "MENU TELEVISOR", ".";
+  }
+  r = MenuAcciones.MostrarAcciones(noun);
+  if (r) {
+    ejec = r.ZIPI_ejecutar();
+    if (r hasnt general) {
+      meta = 0;
+      if (ejec == 'ex') {
+        <<Examine noun>>;
+      }
+      ImprimirPrompt();
+      glk_set_style(style_Input);
+      PrintAnything(ejec);
+      print " ";
+      MostrarNombre(noun, 2, 0, 1);
+      new_line;
+      glk_set_style(style_Normal);
+      PrintOrRun(r, ZIPI_accion);
+    } else {
+      glk_cancel_line_event(gg_mainwin, gg_event);
+      ImprimirPrompt();
+      long = PrintAnyToArray(buffer + WORDSIZE,
+                             INPUT_BUFFER_LEN - WORDSIZE,
+                             ejec);
+      long = long + PrintAnyToArray(buffer + WORDSIZE + long,
+                                    INPUT_BUFFER_LEN - WORDSIZE,
+                                    " ");
+      long = long + PrintAnyToArray(buffer + WORDSIZE + long,
+                                    INPUT_BUFFER_LEN - WORDSIZE,
+                                    MostrarNombre, noun,
+                                    2, 0, 1);          ! El objeto
+      long = long + PrintAnyToArray(buffer + WORDSIZE + long,
+                                    INPUT_BUFFER_LEN - WORDSIZE,
+                                    " ");
+      long = long + PrintAnyToArray(buffer + WORDSIZE + long,
+                                    INPUT_BUFFER_LEN - WORDSIZE,
+                                    r.ZIPI_secundario());
+      long = long + PrintAnyToArray(buffer + WORDSIZE + long,
+                                    INPUT_BUFFER_LEN - WORDSIZE,
+                                    " ");
+      buffer-->0 = long;
+      glk_request_line_event(gg_mainwin, buffer + WORDSIZE,
+                             INPUT_BUFFER_LEN - WORDSIZE, buffer-->0);
+    }
+  }
 ];
 
 
