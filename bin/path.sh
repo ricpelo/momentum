@@ -1,2 +1,2 @@
 export PATH=$PATH:$PWD
-
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PWD
