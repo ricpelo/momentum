@@ -2102,6 +2102,8 @@ Object ZIPI_Configuracion
       ZIPI_Aumentar_Ancho_Ventana
       ZIPI_Disminuir_Ancho_Ventana
       ZIPI_Separador
+      ZIPI_Menu_Solo_Hyperlinks
+      ZIPI_Separador
       ZIPI_Avanzadas;
 
 
@@ -2412,6 +2414,20 @@ Object ZIPI_Tamano_Graficos
         anchoVentanaGrafica = anchoVentanaGrafica + 50;
       else
         anchoVentanaGrafica = GRAFICOS_MINUSCULOS;
+    ];
+
+
+Object ZIPI_Menu_Solo_Hyperlinks
+  class ZIPI_Otro
+  with
+    menuSoloHyperlinks true,
+    ZIPI_titulo [;
+      if (self.menuSoloHyperlinks) "Menú de objetos sólo por hyperlinks: SÍ (recomendado)";
+      else           "Menú de objetos sólo por hyperlinks: NO";
+    ],
+    ZIPI_informacion "Mostrar el menú de los objetos sólo pulsando los hyperlinks",
+    ZIPI_cambiar [;
+      self.menuSoloHyperlinks = ~~(self.menuSoloHyperlinks);
     ];
 
 
@@ -3368,6 +3384,10 @@ Object Menu_Configuracion
   if (noun ofclass Lugar) {
     meta = 0;
     <<Enter noun>>;
+  }
+  if (ZIPI_Menu_Solo_Hyperlinks.menuSoloHyperlinks) {
+    meta = 0;
+    <<Examine noun>>;
   }
   r = MenuAcciones.MostrarAcciones(noun);
   if (r) {
